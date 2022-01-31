@@ -1,0 +1,20 @@
+.container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+
+    font-size: 2rem;
+}
+.logoutDiv button {
+    width: 8rem;
+    height: 3rem;
+    font-size: 1.5rem;
+    border: none;
+}
+.logoutDiv button:hover {
+    background-color: black;
+    color: white;
+}
