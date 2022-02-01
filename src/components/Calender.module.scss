@@ -1,0 +1,115 @@
+@import '../sass/variables.scss';
+
+.container{
+    width: 25rem;
+    height: 25rem;
+    cursor: default;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+.monthDiv{
+    width: 21rem;
+    height: 2rem;
+    font-size: 1.5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.previousMonth{
+    width: 3rem;
+    height: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.previousMonth img{
+    width: 100%;
+    height: 100%;
+    transform: rotate(180deg);
+}
+.nextMonth{
+    width: 3rem;
+    height: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.nextMonth img{
+    width: 100%;
+    height: 100%;
+}
+
+.weekDiv{
+    width: 21rem;
+    height: 3rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    
+}
+.weekDiv div{
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+//Styles Days div in calender
+.daysDiv{
+    width: 21rem;
+    height: fit-content;
+    
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    flex-direction: row;
+    
+}
+.daysDiv div{
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    
+}
+.daysDiv div div{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    pointer-events: none;
+}
+.daysDiv div div .dotDiv{
+    width: 1px;
+    height: 1px;
+    border-radius: 50%;
+    border: 4px solid $buttonBackground;
+}
+
+.todayDate{
+    background-color: rgb(255, 255, 173);
+}
+.otherDays{
+    color: gray;
+    cursor: default;
+}
+.selectedDay{
+    background-color: yellow;
+}
+.activeDays:hover{
+    cursor:pointer;
+}

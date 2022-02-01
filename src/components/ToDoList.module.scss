@@ -1,0 +1,96 @@
+@import '../sass/variables.scss';
+
+.container{
+    width: 25rem;
+    height: 25rem;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+}
+.Header{
+    width: 100%;
+    height: 3rem;
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    // border: 1px solid black;
+    cursor: default;
+}
+
+//todo List container Div
+.toDoListContainer{
+    width: 100%;
+    // font-size: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+.toDoListContainer::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.toDoListContainer {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+//AddIcon Div
+.addToDoDiv{
+    background-color: yellow;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.addToDoDiv img{
+    width: 50%;
+    height: 50%;
+}
+
+//todo List Item
+.todo_ListItem{
+    display: flex;
+    flex-direction: row;
+    // align-items: flex-start;
+    // justify-content: flex-start;
+    height: fit-content;
+
+    
+}
+.todo_checkboxDiv{
+    margin: 0.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.todoCheckboxInput{
+    width: 1rem;
+    height: 1rem;
+}
+.todo_item{
+    flex: 1;
+    margin: 0.5rem;
+    text-align: left;
+    word-wrap: break-word;
+}
+.todo_item_done{
+    text-decoration: line-through;
+}
+.todo_deleteDiv{
+    margin: 0.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
+}
+.todo_deleteDiv img{
+    width: 60%;
+    height: 60%;
+}

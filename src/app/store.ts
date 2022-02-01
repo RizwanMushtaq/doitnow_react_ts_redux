@@ -2,11 +2,15 @@ import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import counterReducer from '../features/counter/counterSlice';
 
 import loginReducer from '../features/login/loginSlice'
+import calenderReducer from '../features/calender/calenderSlice';
+import todoListReducer from '../features/todoList/todoListSlice';
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
     login: loginReducer,
+    calender: calenderReducer,
+    todoList: todoListReducer,
   },
 });
 
