@@ -4,10 +4,12 @@ import {logWithDebug} from './../utils/logHandling'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { verifyUser, EnteredDataLoginPage } from './../features/login/loginSlice'
+import { resetCalender } from './../features/calender/calenderSlice'
 import { RootState } from '../app/store'
 
 import UserLogo from './../assets/images/Benutzer.svg'
 import PasswordLogo from './../assets/images/Passwortschloss.svg'
+import { useNavigate } from 'react-router-dom'
 
 const LoginPage: React.FC = () => {
     const usernameInputRef = useRef<HTMLInputElement>(null)
@@ -15,12 +17,18 @@ const LoginPage: React.FC = () => {
     const passwordInputRef = useRef<HTMLInputElement>(null)
     const passwordInputContainerRef = useRef<HTMLDivElement>(null)
 
+    const navigate = useNavigate()
     const dispatch = useDispatch()
-    const handleLoginRequest = () => {
+    const handleLoginRequest = async () => {
         logWithDebug('handleLoginRequest')
         isInputEmpty()
         const enteredData = getInputData()
-        dispatch(verifyUser(enteredData))
+        let loginResult: any = await dispatch(verifyUser(enteredData))
+        logWithDebug(loginResult)
+        if(loginResult.payload.status === 200){
+            dispatch(resetCalender())
+            navigate('/app')
+        }
     }
     const isInputEmpty = () => {
         if(usernameInputRef.current!.value.trim() === ""){
@@ -53,6 +61,7 @@ const LoginPage: React.FC = () => {
 
     const handleRegisterRequest = () => {
         logWithDebug('handleRegisterRequest')
+        navigate('/registration')
     }
 
 

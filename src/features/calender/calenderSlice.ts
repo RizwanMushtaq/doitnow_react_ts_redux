@@ -38,7 +38,14 @@ export const calenderSlice = createSlice({
             if(isRequired){
                 state.updateDateListWithToDos = !state.updateDateListWithToDos
             }
-        }
+        },
+        resetCalender: (state) => {
+            state.todayDate = new Date()
+            state.selectedDate = new Date()
+            state.calenderDate = new Date()
+            state.dateListWithToDos = []
+            state.updateDateListWithToDos = false
+        },
     }
 })
 
@@ -47,5 +54,6 @@ export const { updateSelectedDate,
                showPreviousMonth, 
                updateDateListWithToDos,
                updateCalenderIfRequired,
+               resetCalender,
              } = calenderSlice.actions
 export default calenderSlice.reducer
