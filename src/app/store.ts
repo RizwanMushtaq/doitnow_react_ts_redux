@@ -4,6 +4,7 @@ import counterReducer from '../features/counter/counterSlice';
 import loginReducer from '../features/login/loginSlice'
 import calenderReducer from '../features/calender/calenderSlice';
 import todoListReducer from '../features/todoList/todoListSlice';
+import addToDoItemDialogReducer from '../features/addToDoItemDialog/addToDoItemDialogSlice';
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     login: loginReducer,
     calender: calenderReducer,
     todoList: todoListReducer,
+    addToDoItemDialog: addToDoItemDialogReducer,
   },
 });
 

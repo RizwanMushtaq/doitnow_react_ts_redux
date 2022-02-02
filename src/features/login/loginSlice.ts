@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 import {apiEndPoints} from '../../config/apiEndPoints'
+import { logWithDebug } from '../../utils/logHandling'
 
 interface isLoggedInState {
     value: boolean,
@@ -55,7 +56,12 @@ export const loginSlice = createSlice({
         builder.addCase(verifyUser.rejected, (state, action) => {
             state.value = false
             state.status = 'failed';
-            alert('Incorrect Username or password')
+            logWithDebug(action)
+            if(action.error.message === 'Network Error'){
+                alert(action.error.message)
+            }else {
+                alert('Incorrect username or password')
+            }
         })
     }
 })

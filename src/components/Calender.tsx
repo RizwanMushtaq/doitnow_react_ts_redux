@@ -1,4 +1,4 @@
-import React, {useState , useLayoutEffect} from 'react'
+import React, {useLayoutEffect} from 'react'
 import Style from './Calender.module.scss'
 import {logWithDebug} from '../utils/logHandling'
 import {format, isSameDay, isSameMonth} from 'date-fns'
@@ -7,7 +7,10 @@ import {takeMonth} from './../features/calender/calenderLogic'
 import { RootState } from '../app/store'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
-import {showNextMonth, showPreviousMonth, updateSelectedDate} from '../features/calender/calenderSlice'
+import {showNextMonth, 
+        showPreviousMonth, 
+        updateSelectedDate, 
+        updateDateListWithToDos} from '../features/calender/calenderSlice'
 
 import arrowiconlogo from '../assets/images/Pfeilrechts.svg'
 import axios from 'axios'
@@ -15,12 +18,12 @@ import { apiEndPoints } from '../config/apiEndPoints'
 
 const Calender = () => {
 
-    let [dateListWithTodos, setDateListWithTodos] = useState<Date[]>([])
-
     const dispatch = useDispatch()
     const calenderDate = useSelector((state: RootState) => state.calender.calenderDate)
     const todayDate = useSelector((state: RootState) => state.calender.todayDate)
     const selectedDate = useSelector((state: RootState) => state.calender.selectedDate)
+    const dateList = useSelector((state: RootState) => state.calender.dateListWithToDos)
+    const updateDateList = useSelector((state: RootState) => state.calender.updateDateListWithToDos)
     let data = takeMonth(calenderDate)()
 
     const handlePreviousMonth = ()=>{
@@ -91,7 +94,7 @@ const Calender = () => {
                     <div>{format(day, 'dd')}</div>
                     <div>
                         {
-                            dateListWithTodos.map( (item) => {
+                            dateList.map( (item) => {
                                 if(isSameDay(day, item)){
                                     return <div key={day} className={Style.dotDiv}></div>
                                 }
@@ -107,7 +110,7 @@ const Calender = () => {
                                     <div>{format(day, 'dd')}</div>
                                     <div>
                                         {
-                                            dateListWithTodos.map( (item) => {
+                                            dateList.map( (item) => {
                                                 if(isSameDay(day, item)){
                                                     return <div key={day} className={Style.dotDiv}></div>
                                                 }
@@ -121,7 +124,7 @@ const Calender = () => {
                                     <div>{format(day, 'dd')}</div>
                                     <div>
                                         {
-                                            dateListWithTodos.map( (item) => {
+                                            dateList.map( (item) => {
                                                 if(isSameDay(day, item)){
                                                     return <div key={day} className={Style.dotDiv}></div>
                                                 }
@@ -137,7 +140,7 @@ const Calender = () => {
                                     <div>{format(day, 'dd')}</div>
                                     <div>
                                         {
-                                            dateListWithTodos.map( (item) => {
+                                            dateList.map( (item) => {
                                                 if(isSameDay(day, item)){
                                                     return <div key={day} className={Style.dotDiv}></div>
                                                 }
@@ -151,7 +154,7 @@ const Calender = () => {
                                     <div>{format(day, 'dd')}</div>
                                     <div>
                                         {
-                                            dateListWithTodos.map( (item) => {
+                                            dateList.map( (item) => {
                                                 if(isSameDay(day, item)){
                                                     return <div key={day} className={Style.dotDiv}></div>
                                                 }
@@ -195,19 +198,21 @@ const Calender = () => {
                 let unique = datesArray.filter((value: any, index: any, self: any) => {
                     return self.indexOf(value) === index;
                 })
-                setDateListWithTodos(dateList => [])
+                
+                let finalUnique: Date[] = []
                 for(let i = 0; i < unique.length; i++){
                     let dateArray = unique[i].split('.')
                     let date = new Date(dateArray[2], dateArray[1]-1, dateArray[0])
-                    setDateListWithTodos(dateList => [...dateList, date])
+                    finalUnique.push(date)
                 }
+                dispatch(updateDateListWithToDos(finalUnique))
                 logWithDebug(unique)
             })
             .catch( (err) => {
                 throw err
             })
         }
-    }, [])
+    }, [dispatch, updateDateList])
 
     return (
         <div className={Style.container}>

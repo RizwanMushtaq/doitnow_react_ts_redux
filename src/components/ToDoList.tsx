@@ -8,7 +8,9 @@ import deleteIcon from '../assets/images/Papierkorb.svg'
 import { RootState } from './../app/store'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
-import { updateToDoListData } from '../features/todoList/todoListSlice'
+import { updateToDoListData, updateToDoListMethod } from '../features/todoList/todoListSlice'
+import { updateState } from '../features/addToDoItemDialog/addToDoItemDialogSlice'
+import { updateCalenderIfRequired } from '../features/calender/calenderSlice'
 import { format } from 'date-fns'
 import axios from 'axios'
 import { apiEndPoints } from '../config/apiEndPoints'
@@ -22,15 +24,76 @@ const ToDoList = () => {
                                      format(selectedDate, 'yyyy')
     
     const todoListData = useSelector((state: RootState) => state.todoList.data)
+    const updateToDoList = useSelector((state: RootState) => state.todoList.updateToDoList)
 
     const handleAddTodoIconClick = () => {
         logWithDebug('handleAddTodoIconClick function')
+        dispatch(updateState(true))
     }
-    const handleCheckboxClick = () => {
+    const handleCheckboxClick = (event: any) => {
         logWithDebug('handleCheckboxClick function')
+
+        let bearerToken = localStorage.getItem('BearerToken')
+        let state = event.target.checked
+        let itemId = event.target.id
+
+        if(bearerToken){
+            axios.post(
+                apiEndPoints.updateDoneState,
+                {
+                    "state": state,
+                    "itemId": itemId
+                },
+                {
+                    headers: {
+                        'Authorization': bearerToken
+                    }
+                }
+            )
+            .then( (response) => {
+                if(response.data.result === 'success'){
+                    logWithDebug('todo item done state is updated accordingly')
+                    dispatch(updateToDoListMethod())
+                } else {
+                    logWithDebug('error: todo item done state is not updated accordingly')
+                }
+            })
+            .catch( (error) => {
+                throw error
+            })
+        }
     }
-    const handleDeleteIconClick = () => {
+    const handleDeleteIconClick = (event: any) => {
         logWithDebug('handleDeleteIconClick function')
+
+        let bearerToken = localStorage.getItem('BearerToken')
+        let itemId = event.target.id
+
+        if(bearerToken){
+            axios.post(
+                apiEndPoints.deleteTodoItem,
+                {
+                    "itemId": itemId
+                },
+                {
+                    headers: {
+                        'Authorization': bearerToken
+                    }
+                }
+            )
+            .then( (response) => {
+                if(response.data.result === 'success'){
+                    logWithDebug('todo item is deleted successfully')
+                    dispatch(updateToDoListMethod())
+                    dispatch(updateCalenderIfRequired(selectedDate))
+                } else {
+                    logWithDebug('error: todo item done state is not updated accordingly')
+                }
+            })
+            .catch( (error) => {
+                throw error
+            })
+        }
     }
 
     useLayoutEffect(() => {
@@ -65,7 +128,7 @@ const ToDoList = () => {
                 throw err
             })
         }
-    }, [dispatch, selectedDate])
+    }, [dispatch, selectedDate, updateToDoList])
 
     return (
         <div className={Style.container}>

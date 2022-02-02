@@ -10,10 +10,12 @@ interface ToDoListData {
 
 interface todoListState {
     data: ToDoListData[],
+    updateToDoList: boolean,
 }
 
 const initialState: todoListState = {
-    data: []
+    data: [],
+    updateToDoList: false,
 }
 
 export const todoListSlice = createSlice({
@@ -22,9 +24,12 @@ export const todoListSlice = createSlice({
     reducers: {
         updateToDoListData: (state, action) => {
             state.data = action.payload
+        },
+        updateToDoListMethod: (state) => {
+            state.updateToDoList = !state.updateToDoList
         }
     }
 })
 
-export const { updateToDoListData } = todoListSlice.actions
+export const { updateToDoListData, updateToDoListMethod } = todoListSlice.actions
 export default todoListSlice.reducer
